@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Lucky Grab</title>
+  <title>TAPE × 럭키 그랩</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="game-container">
-    <h1 class="title">LUCKY GRAB</h1>
-    <p class="subtitle">Join the Lucky Grab and take your chance<br>at winning a special reward!</p>
+    <div class="brand-header">
+      <h1 class="brand-name">TAPE</h1>
+      <p class="brand-event">× 럭키 그랩</p>
+    </div>
+    <p class="subtitle">크레인을 움직여 행운의 공을 잡아보세요!</p>
 
     <div class="machine">
       <div class="machine-top">
@@ -27,6 +30,7 @@
 
       <div class="machine-body">
         <div class="ball-pit" id="ballPit"></div>
+        <div class="machine-label">TAPE</div>
       </div>
 
       <div class="machine-base">
@@ -34,16 +38,24 @@
       </div>
     </div>
 
-    <button class="grab-button" id="grabButton">
-      <span class="button-text">GRAB!</span>
-    </button>
+    <div class="controls">
+      <button class="ctrl-btn" id="btnLeft" aria-label="왼쪽">◀</button>
+      <button class="grab-button" id="grabButton">
+        <span class="button-text">잡기!</span>
+      </button>
+      <button class="ctrl-btn" id="btnRight" aria-label="오른쪽">▶</button>
+    </div>
+
+    <p class="hint">◀ ▶ 버튼으로 크레인 이동, 잡기 버튼으로 뽑기!</p>
+
+    <div class="toast" id="toast"></div>
 
     <div class="result-overlay" id="resultOverlay">
       <div class="result-card">
         <div class="result-ball" id="resultBall"></div>
         <h2 class="result-title" id="resultTitle"></h2>
         <p class="result-desc" id="resultDesc"></p>
-        <button class="retry-button" id="retryButton">Try Again</button>
+        <button class="retry-button" id="retryButton">다시 하기</button>
       </div>
     </div>
   </div>
