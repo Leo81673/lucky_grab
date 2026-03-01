@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Lucky Grab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1 class="title">LUCKY GRAB</h1>
+    <p class="subtitle">Join the Lucky Grab and take your chance<br>at winning a special reward!</p>
+
+    <div class="machine">
+      <div class="machine-top">
+        <div class="rail">
+          <div class="claw-assembly" id="clawAssembly">
+            <div class="claw-rope" id="clawRope"></div>
+            <div class="claw-head" id="clawHead">
+              <div class="claw-arm left"></div>
+              <div class="claw-arm right"></div>
+            </div>
+            <div class="grabbed-ball" id="grabbedBall"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="machine-body">
+        <div class="ball-pit" id="ballPit"></div>
+      </div>
+
+      <div class="machine-base">
+        <div class="exit-hole"></div>
+      </div>
+    </div>
+
+    <button class="grab-button" id="grabButton">
+      <span class="button-text">GRAB!</span>
+    </button>
+
+    <div class="result-overlay" id="resultOverlay">
+      <div class="result-card">
+        <div class="result-ball" id="resultBall"></div>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-desc" id="resultDesc"></p>
+        <button class="retry-button" id="retryButton">Try Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
