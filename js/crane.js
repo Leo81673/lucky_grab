@@ -1,5 +1,6 @@
 // Lucky Grab — Crane Movement & Grab Animation
 import { CRANE_MIN, CRANE_MAX, CRANE_STEP, GRAB_RANGE } from './config.js';
+import { settleBalls } from './physics.js';
 
 export function createCraneController(elements) {
   const { clawAssembly, clawRope, grabbedBallEl } = elements;
@@ -55,7 +56,7 @@ export function createCraneController(elements) {
    * Play the full grab animation sequence.
    * Returns { success: boolean, closestBall: object|null, color: object|null }
    */
-  async function playGrabAnimation(balls, pitWidth) {
+  async function playGrabAnimation(balls, pitWidth, pitHeight) {
     const delay = ms => new Promise(r => setTimeout(r, ms));
 
     const craneXInPit = (cranePos / 100) * pitWidth;
@@ -98,6 +99,9 @@ export function createCraneController(elements) {
 
       // Haptic feedback
       if (navigator.vibrate) navigator.vibrate([50, 30, 100]);
+
+      // Remaining balls settle into the gap
+      settleBalls(balls, pitWidth, pitHeight);
     }
 
     // 5. Stop shaking
