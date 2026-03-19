@@ -103,7 +103,23 @@ export function createBalls(ballPit) {
     balls.push({ el, color, x: particles[i].x, y: particles[i].y, vx: 0, vy: 0, grabbed: false });
   }
 
+  // z-index: 높이 있는 공(y가 작은)이 시각적으로 위에 보이도록
+  updateBallZIndex(balls);
+
   return balls;
+}
+
+/**
+ * Set z-index so that balls higher up (lower y) appear visually on top.
+ * This ensures the grab logic and visual stacking match.
+ */
+function updateBallZIndex(balls) {
+  const active = balls.filter(b => !b.grabbed);
+  // Sort by y descending — balls lower down get lower z-index
+  const sorted = [...active].sort((a, b) => b.y - a.y);
+  sorted.forEach((b, i) => {
+    b.el.style.zIndex = i + 2; // start at 2 to stay above machine decorations
+  });
 }
 
 /**
@@ -182,11 +198,12 @@ export function settleBalls(balls, pitWidth, pitHeight) {
       }
     }
 
-    // Update DOM positions
+    // Update DOM positions + z-index
     for (const b of active) {
       b.el.style.left = (b.x - BALL_RADIUS) + 'px';
       b.el.style.top = (b.y - BALL_RADIUS) + 'px';
     }
+    updateBallZIndex(balls);
 
     frame++;
     if (frame < MAX_FRAMES && totalEnergy > 0.5) {
