@@ -34,19 +34,16 @@ TAPE 매장 이벤트용 모바일 크레인 게임. 손님이 QR로 접속 → 
 
 ## 현재 상태
 
-- 순수 HTML/CSS/JS 프로토타입 (프레임워크 없음)
-- 클라이언트 전용 — 백엔드/DB 없음, 보상은 하드코딩
-- 배포: GitHub Pages (main push → Actions 자동 배포)
+- 순수 HTML/CSS/JS (ES Modules, 프레임워크 없음)
+- 백엔드: Supabase (PostgreSQL + RPC + RLS + Auth)
+- 배포: GitHub Pages (프론트엔드) + Supabase (백엔드)
+- 핑거프린트: FingerprintJS 오픈소스 + localStorage fallback
+- 3개 페이지: 게임(index.html), 쿠폰(coupon.html), 관리자(admin.html)
+- 라이브: https://leo81673.github.io/lucky_grab/
 
-## 목표
+## 알려진 버그
 
-이벤트 때 손님이 QR 스캔으로 접속하여 뽑기 게임을 하고 실제 보상(쿠폰, 할인 등)을 받는 서비스.
-
-### 필요한 진화 방향
-1. **보상 시스템**: 관리자가 보상/확률 설정 → 서버에서 당첨 판정 → 결과 표시
-2. **참여 제한**: 어뷰징 방지 (1인 N회, 기기 fingerprint 등)
-3. **관리자 페이지**: 보상 관리, 당첨 내역, 통계
-4. **QR 이벤트**: 이벤트별 QR 생성, 유효기간 관리
+- 크레인이 공을 잡아 올리지 못하는 버그 (z-index/물리 관련, 다음 세션에서 수정 필요)
 
 ## 디자인 시스템
 
