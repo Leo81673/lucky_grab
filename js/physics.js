@@ -100,8 +100,99 @@ export function createBalls(ballPit) {
     el.style.top = (particles[i].y - BALL_RADIUS) + 'px';
 
     ballPit.appendChild(el);
-    balls.push({ el, color, x: particles[i].x, y: particles[i].y, grabbed: false });
+    balls.push({ el, color, x: particles[i].x, y: particles[i].y, vx: 0, vy: 0, grabbed: false });
   }
 
   return balls;
+}
+
+/**
+ * Animate remaining balls settling after one is grabbed.
+ * Runs physics in real-time via requestAnimationFrame.
+ */
+export function settleBalls(balls, pitWidth, pitHeight) {
+  const GRAVITY = 0.4;
+  const DAMPING = 0.35;
+  const FRICTION = 0.92;
+  const active = balls.filter(b => !b.grabbed);
+
+  // Give a tiny nudge to balls that were above the grabbed one
+  active.forEach(b => { b.vy = (b.vy || 0) + 0.5; });
+
+  let frame = 0;
+  const MAX_FRAMES = 120; // ~2 seconds at 60fps
+
+  function step() {
+    let totalEnergy = 0;
+
+    for (const b of active) {
+      b.vy += GRAVITY;
+      b.vx *= FRICTION;
+      b.x += b.vx;
+      b.y += b.vy;
+
+      // Floor
+      if (b.y + BALL_RADIUS > pitHeight - 2) {
+        b.y = pitHeight - BALL_RADIUS - 2;
+        b.vy *= -DAMPING;
+        b.vx *= 0.8;
+      }
+      // Walls
+      if (b.x - BALL_RADIUS < 2) {
+        b.x = BALL_RADIUS + 2;
+        b.vx *= -DAMPING;
+      }
+      if (b.x + BALL_RADIUS > pitWidth - 2) {
+        b.x = pitWidth - BALL_RADIUS - 2;
+        b.vx *= -DAMPING;
+      }
+
+      totalEnergy += Math.abs(b.vx) + Math.abs(b.vy);
+    }
+
+    // Ball-ball collisions
+    for (let i = 0; i < active.length; i++) {
+      for (let j = i + 1; j < active.length; j++) {
+        const a = active[i];
+        const b = active[j];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const distSq = dx * dx + dy * dy;
+        const minDist = BALL_SIZE + 1;
+
+        if (distSq < minDist * minDist && distSq > 0.01) {
+          const dist = Math.sqrt(distSq);
+          const overlap = minDist - dist;
+          const nx = dx / dist;
+          const ny = dy / dist;
+
+          a.x -= nx * overlap * 0.5;
+          a.y -= ny * overlap * 0.5;
+          b.x += nx * overlap * 0.5;
+          b.y += ny * overlap * 0.5;
+
+          const relVn = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+          if (relVn > 0) {
+            a.vx -= relVn * nx * 0.5;
+            a.vy -= relVn * ny * 0.5;
+            b.vx += relVn * nx * 0.5;
+            b.vy += relVn * ny * 0.5;
+          }
+        }
+      }
+    }
+
+    // Update DOM positions
+    for (const b of active) {
+      b.el.style.left = (b.x - BALL_RADIUS) + 'px';
+      b.el.style.top = (b.y - BALL_RADIUS) + 'px';
+    }
+
+    frame++;
+    if (frame < MAX_FRAMES && totalEnergy > 0.5) {
+      requestAnimationFrame(step);
+    }
+  }
+
+  requestAnimationFrame(step);
 }

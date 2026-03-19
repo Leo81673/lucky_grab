@@ -137,9 +137,10 @@ async function grab() {
   crane.stopAll();
 
   const pitW = ballPit.clientWidth || 334;
+  const pitH = ballPit.clientHeight || 280;
 
   // 1. Play crane animation
-  const animResult = await crane.playGrabAnimation(balls, pitW);
+  const animResult = await crane.playGrabAnimation(balls, pitW, pitH);
 
   if (!animResult.success) {
     // Claw missed visually
