@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAPE 이벤트 관리</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-app" id="app">
+    <!-- Login Screen -->
+    <div class="admin-login" id="loginScreen">
+      <div class="login-card">
+        <h1 class="login-logo">TAPE</h1>
+        <p class="login-subtitle">이벤트 관리</p>
+        <form id="loginForm">
+          <input class="admin-input" type="email" id="loginEmail" placeholder="이메일" required autocomplete="email">
+          <input class="admin-input" type="password" id="loginPassword" placeholder="비밀번호" required autocomplete="current-password">
+          <p class="login-error" id="loginError"></p>
+          <button class="admin-btn admin-btn-primary" type="submit" id="loginBtn">로그인</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="admin-dashboard" id="dashboard" style="display:none;">
+      <header class="admin-header">
+        <h1 class="admin-header-title">TAPE 이벤트 관리</h1>
+        <button class="admin-btn admin-btn-ghost" id="logoutBtn">로그아웃</button>
+      </header>
+
+      <!-- Stats -->
+      <div class="stat-cards" id="statCards">
+        <div class="stat-card">
+          <div class="stat-value" id="statParticipants">-</div>
+          <div class="stat-label">총 참여자</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statWinRate">-</div>
+          <div class="stat-label">당첨률</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="statRemaining">-</div>
+          <div class="stat-label">남은 보상</div>
+        </div>
+      </div>
+
+      <!-- Event List -->
+      <div class="admin-section">
+        <div class="section-header">
+          <h2 class="section-title">이벤트</h2>
+          <button class="admin-btn admin-btn-gold" id="createEventBtn">+ 이벤트 생성</button>
+        </div>
+        <div class="table-wrap" id="eventTableWrap">
+          <table id="eventTable">
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>기간</th>
+                <th>참여자</th>
+                <th>상태</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="eventTableBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="eventEmpty" style="display:none;">
+          <div class="empty-emoji">🎮</div>
+          <p class="empty-title">아직 이벤트가 없어요</p>
+          <p class="empty-desc">첫 이벤트를 만들어볼까요?</p>
+          <button class="admin-btn admin-btn-gold" id="createEventBtn2">+ 이벤트 생성</button>
+        </div>
+      </div>
+
+      <!-- Event Detail (modal) -->
+      <div class="modal-overlay" id="eventModal" style="display:none;">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h2 class="modal-title" id="modalTitle">이벤트 생성</h2>
+            <button class="modal-close" id="modalClose">&times;</button>
+          </div>
+          <form id="eventForm">
+            <label class="admin-label">이벤트 이름</label>
+            <input class="admin-input" type="text" id="eventName" required placeholder="3월 봄맞이 이벤트">
+
+            <label class="admin-label">URL 슬러그</label>
+            <input class="admin-input" type="text" id="eventSlug" required placeholder="spring-2026" pattern="[a-z0-9\-]+">
+
+            <div class="form-row">
+              <div class="form-col">
+                <label class="admin-label">시작일시</label>
+                <input class="admin-input" type="datetime-local" id="eventStart" required>
+              </div>
+              <div class="form-col">
+                <label class="admin-label">종료일시</label>
+                <input class="admin-input" type="datetime-local" id="eventEnd" required>
+              </div>
+            </div>
+
+            <label class="admin-label">기기당 참여 횟수</label>
+            <input class="admin-input" type="number" id="eventMaxPlays" min="1" max="99" value="3">
+
+            <hr class="modal-divider">
+
+            <div class="section-header" style="margin-bottom:12px;">
+              <h3 class="section-subtitle">보상 설정</h3>
+              <button type="button" class="admin-btn admin-btn-sm" id="addPrizeBtn">+ 보상 추가</button>
+            </div>
+            <div id="prizeList"></div>
+
+            <p class="form-error" id="formError"></p>
+            <button class="admin-btn admin-btn-primary" type="submit" id="saveEventBtn">저장</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Event Detail View -->
+      <div class="modal-overlay" id="detailModal" style="display:none;">
+        <div class="modal-card modal-card-wide">
+          <div class="modal-header">
+            <h2 class="modal-title" id="detailTitle">이벤트 상세</h2>
+            <button class="modal-close" id="detailClose">&times;</button>
+          </div>
+
+          <div class="detail-section">
+            <h3 class="section-subtitle">QR 코드</h3>
+            <div class="qr-container" id="qrContainer">
+              <canvas id="qrCanvas"></canvas>
+              <p class="qr-url" id="qrUrl"></p>
+              <button class="admin-btn admin-btn-sm" id="downloadQrBtn">PNG 다운로드</button>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3 class="section-subtitle">보상 현황</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>보상</th><th>가중치</th><th>남은 수량</th></tr></thead>
+                <tbody id="detailPrizes"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h3 class="section-subtitle">최근 당첨 내역</h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>시간</th><th>보상</th><th>쿠폰 코드</th><th>사용 여부</th></tr></thead>
+                <tbody id="detailHistory"></tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="historyEmpty" style="display:none;">
+              <p class="empty-desc">아직 참여자가 없어요. QR을 공유해보세요!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
