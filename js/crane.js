@@ -76,19 +76,29 @@ export function createCraneController(elements) {
     clawAssembly.classList.add('closed');
     await delay(300);
 
-    // 4. Find closest ball
+    // 4. Find topmost ball within horizontal range
+    // Claw comes from above — only grab balls near the top surface
+    const candidates = balls
+      .filter(b => !b.grabbed && Math.abs(b.x - craneXInPit) <= GRAB_RANGE)
+      .sort((a, b) => a.y - b.y); // sort by y ascending (top first)
+
+    // Pick the topmost ball; if multiple at similar height, pick closest horizontally
     let closestBall = null;
     let closestDist = Infinity;
-    for (const b of balls) {
-      if (b.grabbed) continue;
-      const dx = Math.abs(b.x - craneXInPit);
-      if (dx < closestDist) {
-        closestDist = dx;
-        closestBall = b;
+    if (candidates.length > 0) {
+      const topY = candidates[0].y;
+      // Consider balls within ~1 ball diameter of the topmost one
+      for (const b of candidates) {
+        if (b.y > topY + BALL_SIZE) break; // too far below the top layer
+        const dx = Math.abs(b.x - craneXInPit);
+        if (dx < closestDist) {
+          closestDist = dx;
+          closestBall = b;
+        }
       }
     }
 
-    const grabbed = closestBall && closestDist <= GRAB_RANGE;
+    const grabbed = closestBall !== null;
 
     if (grabbed) {
       closestBall.grabbed = true;
