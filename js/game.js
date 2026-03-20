@@ -8,6 +8,10 @@ import {
   showToast, hideResultOverlay, showSuspense, hideSuspense,
   updateRemainingPlays,
 } from './ui.js';
+import {
+  toggleMute, isMuted,
+  playSuspense, playWin, playMiss,
+} from './sound.js';
 
 // --- DOM Elements ---
 const ballPit = document.getElementById('ballPit');
@@ -36,7 +40,10 @@ async function init() {
   clawAssembly.style.transition = 'none';
   clawAssembly.style.left = '50%';
 
-  // 2. Create balls immediately (no server needed)
+  // 2. Create mute toggle
+  createMuteButton();
+
+  // 3. Create balls immediately (no server needed)
   balls = createBalls(ballPit);
 
   // 3. Get event slug
@@ -144,6 +151,7 @@ async function grab() {
 
   if (!animResult.success) {
     // Claw missed visually
+    playMiss();
     showToast('아쉽! 조금 더 가까이 움직여보세요!');
     isGrabbing = false;
     grabButton.disabled = false;
@@ -154,6 +162,7 @@ async function grab() {
 
   // 2. Show suspense
   showSuspense();
+  playSuspense();
   await new Promise(r => setTimeout(r, 1500));
   hideSuspense();
 
@@ -179,8 +188,10 @@ async function grab() {
       updateRemainingPlays(remainingPlays, eventData.max_plays_per_device);
 
       if (result.prize) {
+        playWin();
         showWinResult(result.prize, result.coupon.id, animResult.color);
       } else {
+        playMiss();
         showMissResult(remainingPlays);
       }
     } catch {
@@ -198,6 +209,7 @@ async function grab() {
       { title: '🎁 선물 상자!', description: '깜짝 선물 상자 당첨! 무엇이 들어있을까요?' },
     ];
     const prize = DEMO_PRIZES[Math.floor(Math.random() * DEMO_PRIZES.length)];
+    playWin();
     showWinResult(prize, 'demo', animResult.color);
   }
 }
@@ -218,6 +230,19 @@ function resetGame() {
       btnRight.disabled = false;
     }
   });
+}
+
+function createMuteButton() {
+  const btn = document.createElement('button');
+  btn.id = 'muteBtn';
+  btn.className = 'mute-btn';
+  btn.setAttribute('aria-label', '소리 켜기/끄기');
+  btn.textContent = isMuted() ? '🔇' : '🔊';
+  btn.addEventListener('click', () => {
+    const nowMuted = toggleMute();
+    btn.textContent = nowMuted ? '🔇' : '🔊';
+  });
+  document.querySelector('.game-container').appendChild(btn);
 }
 
 // Start

@@ -26,6 +26,8 @@
 - SQL 테스트 T1~T6, T9 전부 통과 (T6 assertion 버그 수정 포함)
 - Supabase CLI 영구 로그인 + 프로젝트 링크 완료
 
+- P2: 사운드 이펙트 (Web Audio API, 기본 음소거, 토글 버튼)
+- P3: prefers-reduced-motion 적용
+
 ## 다음
-- P2: 사운드 이펙트
-- P3: prefers-reduced-motion
+- plan.md 전체 구현 완료 — 실사용 테스트 및 폴리싱

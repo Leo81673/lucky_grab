@@ -1,6 +1,7 @@
 // Lucky Grab — Crane Movement & Grab Animation
 import { CRANE_MIN, CRANE_MAX, CRANE_STEP, GRAB_RANGE, BALL_SIZE } from './config.js';
 import { settleBalls } from './physics.js';
+import { playClawDown, playGrab as playGrabSound, playClawUp } from './sound.js';
 
 export function createCraneController(elements) {
   const { clawAssembly, clawRope, grabbedBallEl, ballPit } = elements;
@@ -65,6 +66,7 @@ export function createCraneController(elements) {
     const craneXInPit = (clawRect.left + clawRect.width / 2) - pitRect.left;
 
     // 1. Lower claw
+    playClawDown();
     clawRope.style.transition = 'height 0.7s ease-in';
     clawRope.style.height = '215px';
     await delay(750);
@@ -76,6 +78,7 @@ export function createCraneController(elements) {
     await delay(250);
 
     // 3. Close claw
+    playGrabSound();
     clawAssembly.classList.add('closed');
     await delay(300);
 
@@ -123,6 +126,7 @@ export function createCraneController(elements) {
     balls.forEach(b => b.el.classList.remove('shaking'));
 
     // 6. Raise claw
+    playClawUp();
     clawRope.style.transition = 'height 0.7s ease-out';
     clawRope.style.height = '20px';
     await delay(750);

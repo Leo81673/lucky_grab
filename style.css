@@ -491,6 +491,27 @@ body {
 .game-container > * { position: relative; z-index: 1; }
 
 /* =============================================================
+   Mute Button
+   ============================================================= */
+.mute-btn {
+  position: fixed; top: 16px; right: 16px;
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s ease;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.mute-btn:active { background: var(--surface-hover); }
+
+/* =============================================================
    Landscape Warning
    ============================================================= */
 .landscape-warning {
@@ -509,4 +530,15 @@ body {
 
 @media (orientation: landscape) and (max-height: 500px) {
   .landscape-warning { display: flex; }
+}
+
+/* =============================================================
+   Reduced Motion
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
