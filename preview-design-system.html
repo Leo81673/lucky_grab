@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Grab — Design System Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root {
+  /* Colors */
+  --gold: #F5A623;
+  --gold-light: #FFD07A;
+  --gold-dark: #D48A0C;
+  --action: #FF5566;
+  --action-hover: #FF3347;
+  --bg: #0B0B1A;
+  --bg-elevated: #12122A;
+  --surface: #1A1A2E;
+  --surface-hover: #22223A;
+  --border: #2A2A44;
+  --text: #F0F0F5;
+  --text-secondary: #B0B0CC;
+  --text-muted: #8888AA;
+  --text-dim: #555577;
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --error: #F87171;
+  --info: #60A5FA;
+
+  /* Typography */
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Pretendard Variable', 'Pretendard', -apple-system, sans-serif;
+
+  /* Spacing */
+  --sp-2xs: 2px;
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 48px;
+  --sp-3xl: 64px;
+
+  /* Radius */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 20px;
+  --r-full: 9999px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-short: 150ms;
+  --dur-medium: 300ms;
+}
+
+[data-theme="light"] {
+  --bg: #F5F5F8;
+  --bg-elevated: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-hover: #F0F0F5;
+  --border: #E0E0E8;
+  --text: #1A1A2E;
+  --text-secondary: #555577;
+  --text-muted: #8888AA;
+  --text-dim: #B0B0CC;
+  --gold: #D48A0C;
+  --gold-light: #F5A623;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--sp-2xl) var(--sp-lg);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-3xl);
+  padding-bottom: var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.theme-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  transition: background var(--dur-short) var(--ease-out);
+}
+.theme-toggle:hover { background: var(--surface-hover); }
+
+/* Sections */
+.section {
+  margin-bottom: var(--sp-3xl);
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-lg);
+}
+
+/* Font Specimens */
+.specimen {
+  margin-bottom: var(--sp-xl);
+}
+
+.specimen-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: var(--sp-sm);
+}
+
+.specimen-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 56px;
+  letter-spacing: 6px;
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: var(--sp-xs);
+}
+
+.specimen-display-sub {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--text);
+  margin-bottom: var(--sp-md);
+}
+
+.specimen-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+.specimen-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.specimen-data {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: -1px;
+}
+
+.specimen-data-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.type-scale {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.type-scale-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-md);
+}
+
+.type-scale-size {
+  font-size: 11px;
+  color: var(--text-dim);
+  width: 48px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Color Palette */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--sp-md);
+}
+
+.swatch {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.swatch-color {
+  height: 80px;
+}
+
+.swatch-info {
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--surface);
+}
+
+.swatch-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.swatch-hex {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* UI Components */
+.components {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-xl);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+}
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--action) 0%, var(--action-hover) 100%);
+  color: white;
+  box-shadow: 0 4px 16px rgba(255, 85, 102, 0.35);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-gold {
+  background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 100%);
+  color: #1A1A2E;
+  box-shadow: 0 4px 16px rgba(245, 166, 35, 0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-lg);
+}
+
+/* Alerts */
+.alerts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.alert {
+  padding: var(--sp-md);
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.alert-success { background: rgba(74, 222, 128, 0.1); color: var(--success); border: 1px solid rgba(74, 222, 128, 0.2); }
+.alert-warning { background: rgba(251, 191, 36, 0.1); color: var(--warning); border: 1px solid rgba(251, 191, 36, 0.2); }
+.alert-error { background: rgba(248, 113, 113, 0.1); color: var(--error); border: 1px solid rgba(248, 113, 113, 0.2); }
+.alert-info { background: rgba(96, 165, 250, 0.1); color: var(--info); border: 1px solid rgba(96, 165, 250, 0.2); }
+
+/* Form Inputs */
+.input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 100%;
+  max-width: 320px;
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.15);
+}
+.input::placeholder { color: var(--text-dim); }
+
+/* Mockup: Game Result */
+.mockup-phone {
+  width: 320px;
+  background: var(--bg);
+  border-radius: 32px;
+  border: 3px solid var(--border);
+  padding: 20px 16px 24px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.mockup-result {
+  text-align: center;
+}
+
+.mockup-ball {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b8a 0%, #ee3366 100%);
+  margin: 0 auto var(--sp-md);
+  box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.3), inset 5px 5px 10px rgba(255, 255, 255, 0.15);
+  position: relative;
+}
+.mockup-ball::after {
+  content: '';
+  position: absolute;
+  top: 18%;
+  left: 22%;
+  width: 35%;
+  height: 22%;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+}
+
+.mockup-prize-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.mockup-prize-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--sp-lg);
+}
+
+/* Mockup: Coupon */
+.mockup-coupon {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--sp-lg);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.coupon-badge {
+  display: inline-block;
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--r-full);
+  margin-bottom: var(--sp-md);
+}
+
+.coupon-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 48px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.coupon-name {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-lg);
+}
+
+.coupon-timer {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--action);
+  margin-bottom: 4px;
+}
+
+.coupon-timer-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-lg);
+}
+
+.coupon-used {
+  opacity: 0.4;
+  filter: grayscale(1);
+  position: relative;
+}
+
+.coupon-used::after {
+  content: '사용 완료';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--text-muted);
+  border: 3px solid var(--text-muted);
+  padding: 8px 24px;
+  border-radius: var(--r-md);
+  white-space: nowrap;
+}
+
+/* Mockup: Admin */
+.mockup-admin {
+  max-width: 100%;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-lg);
+}
+
+.admin-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-md);
+}
+
+.stat-value {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.stat-change {
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.stat-change.up { color: var(--success); }
+.stat-change.down { color: var(--error); }
+
+/* Table */
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th {
+  text-align: left;
+  padding: 10px 16px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+tr:last-child td { border-bottom: none; }
+
+td:first-child { color: var(--text); font-weight: 500; }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--r-full);
+  font-size: 11px;
+  font-weight: 600;
+}
+.tag-active { background: rgba(74, 222, 128, 0.15); color: var(--success); }
+.tag-expired { background: rgba(136, 136, 170, 0.15); color: var(--text-muted); }
+
+/* Mockup grid */
+.mockup-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--sp-xl);
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .mockup-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--sp-3xl) 0;
+}
+
+/* Spacing demo */
+.spacing-demo {
+  display: flex;
+  gap: var(--sp-sm);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.spacing-block {
+  background: rgba(245, 166, 35, 0.2);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Radius demo */
+.radius-demo {
+  display: flex;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+.radius-block {
+  width: 64px;
+  height: 64px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">Lucky Grab Design System</div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 / ☀️ 테마 전환</button>
+  </div>
+
+  <!-- 1. Font Specimens -->
+  <div class="section">
+    <div class="section-label">Typography</div>
+
+    <div class="specimen">
+      <div class="specimen-meta">Display — Outfit 900 · 56px · letter-spacing: 6px</div>
+      <div class="specimen-display">TAPE</div>
+    </div>
+
+    <div class="specimen">
+      <div class="specimen-meta">Heading — Outfit 700 · 28px</div>
+      <div class="specimen-display-sub">× 럭키 그랩</div>
+    </div>
+
+    <div class="specimen">
+      <div class="specimen-meta">Body — Pretendard 400 · 15px · line-height: 1.7</div>
+      <div class="specimen-body">
+        크레인을 움직여 <strong>행운의 공</strong>을 잡아보세요! TAPE 매장에서만 만날 수 있는 특별한 이벤트입니다.
+        당첨된 쿠폰은 매장에서 바로 사용할 수 있어요.
+      </div>
+    </div>
+
+    <div class="specimen" style="display: flex; gap: 48px; flex-wrap: wrap;">
+      <div>
+        <div class="specimen-meta">Data — Pretendard 700 tabular-nums · 36px</div>
+        <div class="specimen-data">23:45</div>
+        <div class="specimen-data-label">남은 시간</div>
+      </div>
+      <div>
+        <div class="specimen-meta">&nbsp;</div>
+        <div class="specimen-data">1,247</div>
+        <div class="specimen-data-label">총 참여자</div>
+      </div>
+      <div>
+        <div class="specimen-meta">&nbsp;</div>
+        <div class="specimen-data">89.3%</div>
+        <div class="specimen-data-label">당첨률</div>
+      </div>
+    </div>
+
+    <div class="specimen">
+      <div class="specimen-meta">Type Scale</div>
+      <div class="type-scale">
+        <div class="type-scale-row">
+          <span class="type-scale-size">48px</span>
+          <span style="font-family:var(--font-display);font-weight:900;font-size:48px;color:var(--gold);line-height:1.1;">TAPE</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-size">28px</span>
+          <span style="font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1.2;">대박 당첨!</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-size">20px</span>
+          <span style="font-family:var(--font-display);font-weight:700;font-size:20px;line-height:1.3;">이벤트 관리</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-size">15px</span>
+          <span style="font-size:15px;color:var(--text-secondary);">크레인을 움직여 행운의 공을 잡아보세요!</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-size">13px</span>
+          <span style="font-size:13px;color:var(--text-muted);">◀ ▶ 버튼으로 크레인 이동, 잡기 버튼으로 뽑기!</span>
+        </div>
+        <div class="type-scale-row">
+          <span class="type-scale-size">11px</span>
+          <span style="font-size:11px;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;">remaining prizes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 2. Color Palette -->
+  <div class="section">
+    <div class="section-label">Color Palette</div>
+    <div class="palette">
+      <div class="swatch">
+        <div class="swatch-color" style="background: linear-gradient(135deg, #FFD07A, #F5A623);"></div>
+        <div class="swatch-info"><div class="swatch-name">Gold (Primary)</div><div class="swatch-hex">#F5A623</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: linear-gradient(135deg, #FF7788, #FF5566);"></div>
+        <div class="swatch-info"><div class="swatch-name">Coral (Action)</div><div class="swatch-hex">#FF5566</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #0B0B1A; border-bottom: 1px solid #2A2A44;"></div>
+        <div class="swatch-info"><div class="swatch-name">Background</div><div class="swatch-hex">#0B0B1A</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #1A1A2E;"></div>
+        <div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex">#1A1A2E</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #4ADE80;"></div>
+        <div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#4ADE80</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #FBBF24;"></div>
+        <div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#FBBF24</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #F87171;"></div>
+        <div class="swatch-info"><div class="swatch-name">Error</div><div class="swatch-hex">#F87171</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: #60A5FA;"></div>
+        <div class="swatch-info"><div class="swatch-name">Info</div><div class="swatch-hex">#60A5FA</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 3. UI Components -->
+  <div class="section">
+    <div class="section-label">UI Components</div>
+
+    <div style="margin-bottom: var(--sp-xl);">
+      <div class="specimen-meta" style="margin-bottom: var(--sp-md);">Buttons</div>
+      <div class="components">
+        <button class="btn btn-primary">잡기!</button>
+        <button class="btn btn-gold">쿠폰 보기</button>
+        <button class="btn btn-secondary">다시 하기</button>
+        <button class="btn btn-ghost">취소</button>
+      </div>
+    </div>
+
+    <div style="margin-bottom: var(--sp-xl);">
+      <div class="specimen-meta" style="margin-bottom: var(--sp-md);">Form Inputs</div>
+      <div style="display: flex; flex-direction: column; gap: var(--sp-sm); max-width: 320px;">
+        <input class="input" type="text" placeholder="이벤트 이름">
+        <input class="input" type="text" placeholder="보상 제목" value="10% 할인 쿠폰" style="border-color: var(--gold);">
+      </div>
+    </div>
+
+    <div>
+      <div class="specimen-meta" style="margin-bottom: var(--sp-md);">Alerts</div>
+      <div class="alerts" style="max-width: 480px;">
+        <div class="alert alert-success">✓ 쿠폰이 성공적으로 발급되었어요!</div>
+        <div class="alert alert-warning">⚠ 남은 상품이 3개뿐이에요</div>
+        <div class="alert alert-error">✕ 이미 참여하셨어요</div>
+        <div class="alert alert-info">ℹ 이벤트가 3월 25일에 시작돼요</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 4. Spacing & Radius -->
+  <div class="section">
+    <div class="section-label">Spacing (4px base)</div>
+    <div class="spacing-demo" style="margin-bottom: var(--sp-xl);">
+      <div class="spacing-block" style="width:16px;height:16px;">2</div>
+      <div class="spacing-block" style="width:20px;height:20px;">4</div>
+      <div class="spacing-block" style="width:28px;height:28px;">8</div>
+      <div class="spacing-block" style="width:40px;height:40px;">16</div>
+      <div class="spacing-block" style="width:52px;height:52px;">24</div>
+      <div class="spacing-block" style="width:64px;height:64px;">32</div>
+      <div class="spacing-block" style="width:80px;height:80px;">48</div>
+      <div class="spacing-block" style="width:96px;height:96px;">64</div>
+    </div>
+
+    <div class="section-label">Border Radius</div>
+    <div class="radius-demo">
+      <div class="radius-block" style="border-radius: 4px;">4px</div>
+      <div class="radius-block" style="border-radius: 8px;">8px</div>
+      <div class="radius-block" style="border-radius: 12px;">12px</div>
+      <div class="radius-block" style="border-radius: 20px;">20px</div>
+      <div class="radius-block" style="border-radius: 9999px;">full</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 5. Mockups -->
+  <div class="section">
+    <div class="section-label">Product Mockups</div>
+
+    <div class="mockup-grid">
+      <!-- Phone: Game Result -->
+      <div>
+        <div class="specimen-meta" style="margin-bottom: var(--sp-md);">게임 당첨 결과</div>
+        <div class="mockup-phone">
+          <div class="mockup-result">
+            <div class="mockup-ball"></div>
+            <div class="mockup-prize-title">🎉 대박 당첨!</div>
+            <div class="mockup-prize-desc">TAPE 최고의 특별 선물에 당첨되셨어요!</div>
+            <button class="btn btn-gold" style="width: 100%; margin-bottom: var(--sp-sm);">쿠폰 보기</button>
+            <button class="btn btn-ghost" style="width: 100%; font-size: 13px;">공유하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coupon States -->
+      <div>
+        <div class="specimen-meta" style="margin-bottom: var(--sp-md);">쿠폰 화면 (활성 / 사용완료)</div>
+
+        <div class="mockup-coupon" style="margin-bottom: var(--sp-md);">
+          <div class="coupon-badge">TAPE 이벤트</div>
+          <div class="coupon-value">10%</div>
+          <div class="coupon-name">할인 쿠폰</div>
+          <div class="coupon-timer">23:45</div>
+          <div class="coupon-timer-label">남은 시간</div>
+          <button class="btn btn-primary" style="width: 100%;">사용완료</button>
+        </div>
+
+        <div class="mockup-coupon coupon-used">
+          <div class="coupon-badge">TAPE 이벤트</div>
+          <div class="coupon-value">10%</div>
+          <div class="coupon-name">할인 쿠폰</div>
+          <div class="coupon-timer" style="color: var(--text-muted);">00:00</div>
+          <div class="coupon-timer-label">만료됨</div>
+          <button class="btn btn-ghost" style="width: 100%;" disabled>사용완료</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Admin Mockup -->
+  <div class="section">
+    <div class="section-label">관리자 대시보드</div>
+
+    <div class="mockup-admin">
+      <div class="admin-header">
+        <div class="admin-title" style="font-family: var(--font-display);">TAPE 이벤트 관리</div>
+        <button class="btn btn-gold" style="padding: 8px 20px; font-size: 13px;">+ 이벤트 생성</button>
+      </div>
+
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-value">1,247</div>
+          <div class="stat-label">총 참여자</div>
+          <div class="stat-change up">↑ 23% 어제 대비</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">89.3%</div>
+          <div class="stat-label">당첨률</div>
+          <div class="stat-change">목표: 85%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">37</div>
+          <div class="stat-label">남은 보상</div>
+          <div class="stat-change down">↓ 12개 소진</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>이벤트 이름</th>
+              <th>기간</th>
+              <th>참여자</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3월 봄맞이 이벤트</td>
+              <td>3/15 – 3/25</td>
+              <td>847</td>
+              <td><span class="tag tag-active">진행 중</span></td>
+            </tr>
+            <tr>
+              <td>발렌타인 특별 이벤트</td>
+              <td>2/10 – 2/14</td>
+              <td>1,203</td>
+              <td><span class="tag tag-expired">종료</span></td>
+            </tr>
+            <tr>
+              <td>신년 오프닝 이벤트</td>
+              <td>1/1 – 1/7</td>
+              <td>562</td>
+              <td><span class="tag tag-expired">종료</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+}
+</script>
+</body>
+</html>
