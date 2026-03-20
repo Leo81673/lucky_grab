@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // GitHub Pages SPA routing: /slug → index.html?event=slug
+    (function() {
+      var path = window.location.pathname;
+      var segments = path.split('/').filter(Boolean);
+      var last = segments[segments.length - 1];
+
+      // Skip known files
+      if (!last || last.includes('.')) return;
+
+      // Build redirect: replace last segment with index.html?event=slug
+      var base = segments.slice(0, -1).join('/');
+      var newPath = '/' + (base ? base + '/' : '') + 'index.html?event=' + encodeURIComponent(last);
+      window.location.replace(newPath);
+    })();
+  </script>
+</head>
+<body></body>
+</html>
