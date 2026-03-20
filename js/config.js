@@ -53,8 +53,16 @@ export async function initSupabase() {
   return _supabase;
 }
 
-// Get event slug from URL
+// Get event slug from URL (supports both ?event=slug and /slug paths)
 export function getEventSlug() {
+  // 1. Check query param first (redirect landing)
   const params = new URLSearchParams(window.location.search);
-  return params.get('event');
+  if (params.get('event')) return params.get('event');
+
+  // 2. Check path (direct access via 404.html won't reach here, but future-proof)
+  const segments = window.location.pathname.split('/').filter(Boolean);
+  const last = segments[segments.length - 1];
+  if (last && !last.includes('.')) return last;
+
+  return null;
 }
