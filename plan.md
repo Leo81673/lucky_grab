@@ -52,9 +52,9 @@ coupons (id uuid PK, participant_id uuid FK, prize_id uuid FK, code text UNIQUE,
 
 ```
   수정:     index.html, style.css
-  새 파일:  js/config.js, js/supabase.js, js/physics.js, js/crane.js, js/ui.js, js/game.js
-            coupon.html, js/coupon.js
-            admin.html, js/admin.js
+  새 파일:  js/config.js, js/supabase-api.js, js/physics.js, js/crane.js, js/ui.js, js/game.js
+            js/sound.js, js/fingerprint.js, js/coupon.js, js/admin.js
+            coupon.html, admin.html, 404.html, CNAME
             supabase/migrations/001_initial.sql
             supabase/tests/test_play_grab.sql
 ```

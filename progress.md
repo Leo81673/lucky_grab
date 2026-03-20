@@ -29,5 +29,7 @@
 - P2: 사운드 이펙트 (Web Audio API, 기본 음소거, 토글 버튼)
 - P3: prefers-reduced-motion 적용
 
+- 커스텀 도메인 연결 (grab.slowagers.co.kr) + 경로 기반 URL 라우팅
+
 ## 다음
 - plan.md 전체 구현 완료 — 실사용 테스트 및 폴리싱
