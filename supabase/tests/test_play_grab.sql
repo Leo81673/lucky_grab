@@ -68,7 +68,7 @@ BEGIN
 
   v_result := play_grab('test_empty', 'test_fp_empty');
   ASSERT v_result->>'success' = 'true', 'T6 FAIL: expected success';
-  ASSERT v_result->>'prize' = 'null' OR v_result->'prize' IS NULL, 'T6 FAIL: expected null prize (miss)';
+  ASSERT v_result->>'prize' IS NULL, 'T6 FAIL: expected null prize (miss)';
   RAISE NOTICE 'T6 PASS: All prizes exhausted (miss)';
 
   -- T9: Coupon validity check

@@ -20,6 +20,12 @@
 - 관리자 계정 생성 완료
 - GitHub Pages 배포 + 라이브 테스트 완료
 
+- 크레인 공 잡기 버그 수정 (z-index, 좌표, BALL_SIZE, shaking 충돌)
+- E2E 테스트 통과 (관리자 로그인 → 이벤트 생성 → 게임 플레이 → 서버 당첨 → 쿠폰 페이지)
+
+- SQL 테스트 T1~T6, T9 전부 통과 (T6 assertion 버그 수정 포함)
+- Supabase CLI 영구 로그인 + 프로젝트 링크 완료
+
 ## 다음
-- 실제 이벤트 생성 후 전체 플로우 E2E 테스트
-- SQL 테스트 실행
+- P2: 사운드 이펙트
+- P3: prefers-reduced-motion
