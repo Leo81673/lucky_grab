@@ -43,8 +43,10 @@ TAPE 매장 이벤트용 모바일 크레인 게임. 손님이 QR로 접속 → 
 - 백엔드: Supabase (PostgreSQL + RPC + RLS + Auth)
 - 배포: GitHub Pages (프론트엔드) + Supabase (백엔드)
 - 핑거프린트: FingerprintJS 오픈소스 + localStorage fallback
+- 커스텀 도메인: grab.slowagers.co.kr (경로 기반 이벤트 URL)
 - 3개 페이지: 게임(index.html), 쿠폰(coupon.html), 관리자(admin.html)
-- 라이브: https://leo81673.github.io/lucky_grab/
+- 404.html: 경로 기반 URL → 게임 페이지 리다이렉트
+- 라이브: https://grab.slowagers.co.kr/
 
 ## 디자인 시스템
 
