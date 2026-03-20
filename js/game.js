@@ -28,7 +28,7 @@ let eventData = null;
 let remainingPlays = null;
 
 // --- Crane Controller ---
-const crane = createCraneController({ clawAssembly, clawRope, grabbedBallEl });
+const crane = createCraneController({ clawAssembly, clawRope, grabbedBallEl, ballPit });
 
 // --- Init ---
 async function init() {

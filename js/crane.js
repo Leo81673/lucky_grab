@@ -1,9 +1,9 @@
 // Lucky Grab — Crane Movement & Grab Animation
-import { CRANE_MIN, CRANE_MAX, CRANE_STEP, GRAB_RANGE } from './config.js';
+import { CRANE_MIN, CRANE_MAX, CRANE_STEP, GRAB_RANGE, BALL_SIZE } from './config.js';
 import { settleBalls } from './physics.js';
 
 export function createCraneController(elements) {
-  const { clawAssembly, clawRope, grabbedBallEl } = elements;
+  const { clawAssembly, clawRope, grabbedBallEl, ballPit } = elements;
 
   let cranePos = 50;
   let movingLeft = false;
@@ -59,7 +59,10 @@ export function createCraneController(elements) {
   async function playGrabAnimation(balls, pitWidth, pitHeight) {
     const delay = ms => new Promise(r => setTimeout(r, ms));
 
-    const craneXInPit = (cranePos / 100) * pitWidth;
+    // Use actual DOM positions for accurate crane-to-pit coordinate mapping
+    const clawRect = clawAssembly.getBoundingClientRect();
+    const pitRect = ballPit.getBoundingClientRect();
+    const craneXInPit = (clawRect.left + clawRect.width / 2) - pitRect.left;
 
     // 1. Lower claw
     clawRope.style.transition = 'height 0.7s ease-in';
@@ -102,6 +105,7 @@ export function createCraneController(elements) {
 
     if (grabbed) {
       closestBall.grabbed = true;
+      closestBall.el.classList.remove('shaking'); // remove animation before setting transform
       closestBall.el.style.opacity = '0';
       closestBall.el.style.transform = 'scale(0)';
       grabbedBallEl.style.background = closestBall.color.bg;
